@@ -29,20 +29,23 @@ public class DiscussionService {
     }
 
     public DiscussionPojo createDiscussion(DiscussionPojo pojo, String username) {
-        User user = userRepository.findUserByUsername(username).orElseThrow(() ->
-                new EntityNotFoundException("User not found with username: " + username));
+//        User user = userRepository.findUserByUsername(username).orElseThrow(() ->
+//                new EntityNotFoundException("User not found with username: " + username));
+        long user = 1;
+
         discussionRepository.save(DiscussionPojo.toEntity(pojo, user));
         return pojo;
     }
 
     public boolean deleteById(long pk, String username) {
         if (discussionRepository.existsById(pk)) {
-            User user = userRepository.findUserByUsername(username).orElseThrow(() ->
-                    new EntityNotFoundException("User not found with username: " + username));
+//            User user = userRepository.findUserByUsername(username).orElseThrow(() ->
+//                    new EntityNotFoundException("User not found with username: " + username));
             Discussion discussion = discussionRepository.findById(pk);
 
             // чтобы пользователь (не админ) мог удалять только свои дискуссии
-            if (discussion.getAuthor().getId() == user.getId() || user.getRole() == UserRole.ROLE_ADMIN) {
+//            if (discussion.getAuthor().getId() == user.getId() || user.getRole() == UserRole.ROLE_ADMIN) {
+            if (true) { // todo
                 discussionRepository.deleteById(pk);
                 return true;
             }

@@ -8,10 +8,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/api/comments")
+@RequestMapping("/api/forum/comments")
 public class CommentController {
+    private final String tempUsername = "username";
+
     private final CommentService commentService;
 
     public CommentController(CommentService commentService) {
@@ -26,7 +27,7 @@ public class CommentController {
     @PostMapping
     public ResponseEntity<CommentPojo> createComment(@RequestBody CommentPojo pojo) {
         try {
-            return new ResponseEntity<>(commentService.createComment(pojo, authService.getUsername()), HttpStatus.OK);
+            return new ResponseEntity<>(commentService.createComment(pojo, this.tempUsername), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -34,6 +35,6 @@ public class CommentController {
 
     @DeleteMapping("/{pk}")
     public boolean deleteDiscussion(@PathVariable long pk) {
-        return commentService.deleteById(pk, authService.getUsername());
+        return commentService.deleteById(pk, this.tempUsername);
     }
 }

@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/api/discussion")
+@RequestMapping("/api/forum/discussions")
 public class DiscussController {
     private final DiscussionService discussionService;
 
@@ -35,8 +34,9 @@ public class DiscussController {
 
     @PostMapping
     public ResponseEntity<DiscussionPojo> createDiscussion(@RequestBody DiscussionPojo pojo) {
+        String username = "username";
         try {
-            return new ResponseEntity<>(discussionService.createDiscussion(pojo, authService.getUsername()), HttpStatus.OK);
+            return new ResponseEntity<>(discussionService.createDiscussion(pojo, username), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -44,6 +44,7 @@ public class DiscussController {
 
     @DeleteMapping("/{pk}")
     public boolean deleteDiscussion(@PathVariable long pk) {
-        return discussionService.deleteById(pk, authService.getUsername());
+        String username = "username";
+        return discussionService.deleteById(pk, username);
     }
 }

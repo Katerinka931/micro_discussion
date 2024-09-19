@@ -24,8 +24,9 @@ public class CommentService {
     }
 
     public CommentPojo createComment(CommentPojo pojo, String username) {
-        User user = userRepository.findUserByUsername(username).orElseThrow(() ->
-                new EntityNotFoundException("User not found with username: " + username));
+//        User user = userRepository.findUserByUsername(username).orElseThrow(() ->
+//                new EntityNotFoundException("User not found with username: " + username));
+        long user = 1;
 
         Discussion discussion = discussionRepository.findById(pojo.getDiscussion_id());
 
@@ -35,13 +36,15 @@ public class CommentService {
 
     public boolean deleteById(long pk, String username) {
         if (commentRepository.existsById(pk)) {
-            User user = userRepository.findUserByUsername(username).orElseThrow(() ->
-                    new EntityNotFoundException("User not found with username: " + username));
+//            User user = userRepository.findUserByUsername(username).orElseThrow(() ->
+//                    new EntityNotFoundException("User not found with username: " + username));
+            long user = 1;
             Comments comment = commentRepository.findById(pk).orElseThrow(() ->
                     new EntityNotFoundException("Comment not found with id: " + pk));
 
             // чтобы пользователь (не админ) мог удалять только свои дискуссии
-            if (comment.getAuthor().getId() == user.getId() || user.getRole() == UserRole.ROLE_ADMIN) {
+//            if (comment.getAuthor().getId() == user.getId() || user.getRole() == UserRole.ROLE_ADMIN) {
+            if (true) { // todo !
                 commentRepository.deleteById(pk);
                 return true;
             }
