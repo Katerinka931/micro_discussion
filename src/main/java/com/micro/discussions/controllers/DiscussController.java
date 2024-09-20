@@ -5,32 +5,16 @@ import com.micro.discussions.services.DiscussionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestClient;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.cloud.client.ServiceInstance;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/forum/discussions")
 public class DiscussController {
-    private final DiscoveryClient discoveryClient;
-    private final RestClient restClient;
     private final DiscussionService discussionService;
 
-    public DiscussController(DiscussionService discussionService, DiscoveryClient discoveryClient, RestClient.Builder restClientBuilder) {
+    public DiscussController(DiscussionService discussionService) {
         this.discussionService = discussionService;
-        this.discoveryClient = discoveryClient;
-        restClient = restClientBuilder.build();
-    }
-
-    @GetMapping("/temp_test") //связь через эврику с сервисом объявлений
-    public String helloWorld() {
-        ServiceInstance serviceInstance = discoveryClient.getInstances("advertisement").get(0);
-        return restClient.get()
-                .uri(serviceInstance.getUri() + "/api/advertisement")
-                .retrieve()
-                .body(String.class);
     }
 
     @GetMapping
