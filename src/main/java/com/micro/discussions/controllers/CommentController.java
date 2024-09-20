@@ -6,28 +6,26 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/forum/comments")
 public class CommentController {
-    private final String tempUsername = "username";
-
     private final CommentService commentService;
 
     public CommentController(CommentService commentService) {
         this.commentService = commentService;
     }
 
-    @GetMapping
-    public List<CommentPojo> findAll() {
-        return commentService.findAll();
+    @GetMapping("/{discussion}")
+    public Map<String, Object> findAllForDiscussion(@PathVariable long discussion) {
+        return commentService.findAllForDiscussion(discussion);
     }
 
     @PostMapping
     public ResponseEntity<CommentPojo> createComment(@RequestBody CommentPojo pojo) {
         try {
-            return new ResponseEntity<>(commentService.createComment(pojo, this.tempUsername), HttpStatus.OK);
+            return new ResponseEntity<>(commentService.createComment(pojo), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -35,6 +33,6 @@ public class CommentController {
 
     @DeleteMapping("/{pk}")
     public boolean deleteDiscussion(@PathVariable long pk) {
-        return commentService.deleteById(pk, this.tempUsername);
+        return commentService.deleteById(pk);
     }
 }
