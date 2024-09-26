@@ -37,6 +37,7 @@ public class CommentService {
     public Map<String, Object> findAllForDiscussion(long discussion_id) {
         Map<String, Object> dictionary = new HashMap<>();
 
+//        фейн клиент
         ServiceInstance serviceInstance = discoveryClient.getInstances("advertisement").get(0);
         Map<String, Object> result = JsonUtil.stringToJson(
                 restClient.get()
