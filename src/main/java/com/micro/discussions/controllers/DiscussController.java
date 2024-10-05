@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/forum/discussions")
@@ -17,18 +18,13 @@ public class DiscussController {
         this.discussionService = discussionService;
     }
 
-    @GetMapping
-    public List<DiscussionPojo> findAll() {
-        return discussionService.findAll();
-    }
-
     @GetMapping("/advertisement/{pk}")
     public List<DiscussionPojo> findAllByAdvertisement(@PathVariable long pk) {
         return discussionService.findAllByAdvertisement(pk);
     }
 
     @GetMapping("/{pk}")
-    public DiscussionPojo findById(@PathVariable long pk) {
+    public Map<String, Object> findById(@PathVariable long pk) {
         return discussionService.findById(pk);
     }
 

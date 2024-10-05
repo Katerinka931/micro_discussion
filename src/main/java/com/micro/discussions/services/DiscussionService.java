@@ -1,36 +1,36 @@
 package com.micro.discussions.services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.micro.discussions.entities.Discussion;
 import com.micro.discussions.pojos.DiscussionPojo;
 import com.micro.discussions.repositories.DiscussionRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class DiscussionService {
     private final DiscussionRepository discussionRepository;
-
-    public List<DiscussionPojo> findAll() {
-        List<Discussion> discussions = discussionRepository.findAll();
-        return DiscussionPojo.convertDiscussionsToPojo(discussions);
-    }
+    private final ApiClient apiClient;
 
     public List<DiscussionPojo> findAllByAdvertisement(long pk) {
         List<Discussion> discussions = discussionRepository.findByAdvertisement(pk);
         return DiscussionPojo.convertDiscussionsToPojo(discussions);
     }
 
-    public DiscussionPojo findById(long pk) {
-        return DiscussionPojo.fromEntity(discussionRepository.findById(pk));
+    public Map<String, Object> findById(long pk) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        DiscussionPojo pojo = DiscussionPojo.fromEntity(discussionRepository.findById(pk));
+
+        Map<String, Object> discussion = objectMapper.convertValue(pojo, Map.class);
+        discussion.put("advertisement", apiClient.getAdvertisement(pojo.getAdvertisement()));
+        return discussion;
     }
 
     public DiscussionPojo createDiscussion(DiscussionPojo pojo, String username) {
-//        User user = userRepository.findUserByUsername(username).orElseThrow(() ->
-//                new EntityNotFoundException("User not found with username: " + username));
         long user = 1;
 
         discussionRepository.save(DiscussionPojo.toEntity(pojo, user));

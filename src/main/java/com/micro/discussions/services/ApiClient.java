@@ -9,5 +9,5 @@ import java.util.Map;
 @FeignClient(name = "advertisement")
 public interface ApiClient {
     @GetMapping("/api/advertisement/{discussion}")
-    Map<String, Object> getDiscussion(@PathVariable long discussion);
+    Map<String, Object> getAdvertisement(@PathVariable long discussion);
 }
