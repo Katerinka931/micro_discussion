@@ -23,6 +23,11 @@ public class DiscussController {
         return discussionService.findAllByAdvertisement(pk);
     }
 
+    @GetMapping("/count_advertisement/{pk}")
+    public int countAdvertisementDiscussions(@PathVariable long pk) {
+        return discussionService.countAdvertisementDiscussions(pk);
+    }
+
     @GetMapping("/{pk}")
     public Map<String, Object> findById(@PathVariable long pk) {
         return discussionService.findById(pk);

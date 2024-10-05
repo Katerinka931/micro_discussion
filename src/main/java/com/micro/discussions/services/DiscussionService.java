@@ -21,6 +21,10 @@ public class DiscussionService {
         return DiscussionPojo.convertDiscussionsToPojo(discussions);
     }
 
+    public int countAdvertisementDiscussions(long pk) {
+        return discussionRepository.countAllByAdvertisement(pk);
+    }
+
     public Map<String, Object> findById(long pk) {
         ObjectMapper objectMapper = new ObjectMapper();
         DiscussionPojo pojo = DiscussionPojo.fromEntity(discussionRepository.findById(pk));
@@ -52,4 +56,6 @@ public class DiscussionService {
         }
         return false;
     }
+
+
 }

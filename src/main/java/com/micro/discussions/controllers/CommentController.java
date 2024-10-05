@@ -16,6 +16,11 @@ public class CommentController {
         this.commentService = commentService;
     }
 
+    @GetMapping("/count/{discussion_id}")
+    public int countAllByDiscussion(@PathVariable long discussion_id) {
+        return commentService.countAllByDiscussion(discussion_id);
+    }
+
     @PostMapping
     public ResponseEntity<CommentPojo> createComment(@RequestBody CommentPojo pojo) {
         try {

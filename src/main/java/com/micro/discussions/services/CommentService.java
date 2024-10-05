@@ -15,6 +15,10 @@ public class CommentService {
     private final DiscussionRepository discussionRepository;
     private final CommentRepository commentRepository;
 
+    public int countAllByDiscussion(long pk) {
+        return commentRepository.countAllByDiscussion_Id(pk);
+    }
+
     public CommentPojo createComment(CommentPojo pojo) {
         long user = 1;
 
