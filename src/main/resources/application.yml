@@ -8,11 +8,14 @@ spring:
     password: guest
     port: 5672
     username: guest
-#    queues:
-#      name: advertisement
-#      durable: true
-#      exclusive: false
-#      auto-delete: false
+    listener:
+      direct:
+        acknowledge-mode=manual:
+  #    queues:
+  #      name: advertisement
+  #      durable: true
+  #      exclusive: false
+  #      auto-delete: false
   datasource:
     url: jdbc:postgresql://localhost:1978/microDiscussions
     username: postgres
