@@ -1,6 +1,18 @@
+server:
+  port: 8081
 spring:
   application:
     name: discussions
+  rabbitmq:
+    host: localhost
+    password: guest
+    port: 5672
+    username: guest
+#    queues:
+#      name: advertisement
+#      durable: true
+#      exclusive: false
+#      auto-delete: false
   datasource:
     url: jdbc:postgresql://localhost:1978/microDiscussions
     username: postgres
@@ -10,8 +22,6 @@ spring:
       hibernate:
         ddl-auto: update
       show-sql: true
-server:
-  port: 8081
 eureka:
   client:
     serviceUrl:

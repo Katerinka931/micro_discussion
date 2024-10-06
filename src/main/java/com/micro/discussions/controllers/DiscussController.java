@@ -45,7 +45,6 @@ public class DiscussController {
 
     @DeleteMapping("/{pk}")
     public boolean deleteDiscussion(@PathVariable long pk) {
-        String username = "username";
-        return discussionService.deleteById(pk, username);
+        return discussionService.deleteById(pk);
     }
 }
