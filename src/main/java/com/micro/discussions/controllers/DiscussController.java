@@ -2,8 +2,10 @@ package com.micro.discussions.controllers;
 
 import com.micro.discussions.pojos.DiscussionPojo;
 import com.micro.discussions.services.DiscussionService;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +31,9 @@ public class DiscussController {
     }
 
     @GetMapping("/{pk}")
-    public Map<String, Object> findById(@PathVariable long pk) {
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @RolesAllowed("ROLE_USER")
+    public Map<String, Object> findById(@PathVariable long pk){
         return discussionService.findById(pk);
     }
 
