@@ -1,9 +1,11 @@
 package com.micro.discussions.services;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.micro.discussions.entities.Discussion;
 import com.micro.discussions.pojos.DiscussionPojo;
 import com.micro.discussions.repositories.DiscussionRepository;
+import com.micro.discussions.utils.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,12 +31,16 @@ public class DiscussionService {
         ObjectMapper objectMapper = new ObjectMapper();
         DiscussionPojo pojo = DiscussionPojo.fromEntity(discussionRepository.findById(pk));
 
-        Map<String, Object> discussion = objectMapper.convertValue(pojo, Map.class);
-        discussion.put("advertisement", apiClient.getAdvertisement(pojo.getAdvertisement()));
+        Map<String, Object> discussion = objectMapper.convertValue(pojo,
+                new TypeReference<>() {
+                }
+        );
+        discussion.put("advertisement", apiClient.getAdvertisement(pojo.getAdvertisement(),
+                AuthUtil.getRole()));
         return discussion;
     }
 
-    public DiscussionPojo createDiscussion(DiscussionPojo pojo, String username) {
+    public DiscussionPojo createDiscussion(DiscussionPojo pojo) {
         long user = 1;
 
         discussionRepository.save(DiscussionPojo.toEntity(pojo, user));
@@ -48,6 +54,4 @@ public class DiscussionService {
         }
         return false;
     }
-
-
 }

@@ -37,9 +37,8 @@ public class DiscussController {
     @PostMapping
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     public ResponseEntity<DiscussionPojo> createDiscussion(@RequestBody DiscussionPojo pojo) {
-        String username = "username";
         try {
-            return new ResponseEntity<>(discussionService.createDiscussion(pojo, username), HttpStatus.OK);
+            return new ResponseEntity<>(discussionService.createDiscussion(pojo), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
