@@ -2,7 +2,6 @@ package com.micro.discussions.controllers;
 
 import com.micro.discussions.pojos.DiscussionPojo;
 import com.micro.discussions.services.DiscussionService;
-import jakarta.annotation.security.RolesAllowed;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,13 +30,12 @@ public class DiscussController {
     }
 
     @GetMapping("/{pk}")
-    @PreAuthorize("hasAuthority('ROLE_USER')")
-    @RolesAllowed("ROLE_USER")
     public Map<String, Object> findById(@PathVariable long pk){
         return discussionService.findById(pk);
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     public ResponseEntity<DiscussionPojo> createDiscussion(@RequestBody DiscussionPojo pojo) {
         String username = "username";
         try {
@@ -48,6 +46,7 @@ public class DiscussController {
     }
 
     @DeleteMapping("/{pk}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public boolean deleteDiscussion(@PathVariable long pk) {
         return discussionService.deleteById(pk);
     }
