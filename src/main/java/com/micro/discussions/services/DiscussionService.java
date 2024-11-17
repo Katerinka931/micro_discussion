@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.micro.discussions.entities.Discussion;
 import com.micro.discussions.pojos.DiscussionPojo;
 import com.micro.discussions.repositories.DiscussionRepository;
+import com.micro.discussions.service_auth.CustomUserDetails;
 import com.micro.discussions.utils.AuthUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,9 +43,8 @@ public class DiscussionService {
     }
 
     public DiscussionPojo createDiscussion(DiscussionPojo pojo) {
-        long user = 1;
-
-        discussionRepository.save(DiscussionPojo.toEntity(pojo, user));
+        CustomUserDetails details = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        discussionRepository.save(DiscussionPojo.toEntity(pojo, details.getUsername()));
         return pojo;
     }
 

@@ -13,10 +13,10 @@ import java.util.List;
 public class CommentPojo {
     private long id;
     private String text;
-    private long author;
+    private String author;
     private long discussion_id;
 
-    public static Comments toEntity(CommentPojo pojo, long author, Discussion discussion) {
+    public static Comments toEntity(CommentPojo pojo, String author, Discussion discussion) {
         Comments comments = new Comments();
         comments.setId(pojo.getId());
         comments.setText(pojo.getText());

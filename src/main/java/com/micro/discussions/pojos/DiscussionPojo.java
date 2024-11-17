@@ -15,7 +15,7 @@ public class DiscussionPojo {
     private long advertisement;
     private String name;
     private String text;
-    private long author;
+    private String author;
     private List<CommentPojo> comments;
 
 
@@ -37,7 +37,7 @@ public class DiscussionPojo {
         return pojo;
     }
 
-    public static Discussion toEntity(DiscussionPojo pojo, long author) {
+    public static Discussion toEntity(DiscussionPojo pojo, String author) {
         Discussion discussion = new Discussion();
         discussion.setId(pojo.getId());
         discussion.setName(pojo.getName());

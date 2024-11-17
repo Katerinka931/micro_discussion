@@ -14,7 +14,7 @@ public class Discussion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private long author;
+    private String author;
     private long advertisement;
     private String name;
     @Column(columnDefinition = "text", length = 1000, nullable = false)

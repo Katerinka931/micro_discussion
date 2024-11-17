@@ -12,7 +12,7 @@ public class Comments {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private long author;
+    private String author;
     @Column
     private String text;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
