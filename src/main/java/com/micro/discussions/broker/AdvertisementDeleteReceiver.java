@@ -19,10 +19,12 @@ public class AdvertisementDeleteReceiver implements ChannelAwareMessageListener 
     @RabbitListener(queues = "advertisement", ackMode = "MANUAL")
     public void onMessage(Message message, Channel channel) throws Exception {
         try {
-            discussionService.deleteById(Integer.parseInt(new String(message.getBody())));
+            discussionService.deleteByAdvertisementId(Integer.parseInt(new String(message.getBody())));
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+            channel.basicPublish("", "responseAdvertisementQueue", null, new String(message.getBody()).getBytes());
         } catch (Exception e) {
             channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
+            channel.basicPublish("", "responseAdvertisementQueue", null, "0".getBytes());
         }
     }
 }

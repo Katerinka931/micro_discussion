@@ -55,4 +55,10 @@ public class DiscussionService {
         }
         return false;
     }
+
+    public void deleteByAdvertisementId(int advertisementId) {
+         List<Discussion> discussions = discussionRepository.findByAdvertisement(advertisementId);
+         for (Discussion discussion : discussions)
+             deleteById(discussion.getId());
+    }
 }
